@@ -21,15 +21,24 @@ ENV NGINX_VERSION=1.20.1 \
 # some of these are not needed in all php projects
 # NOTE: you should prob use specific versions of some of these so you don't break your app
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y \
+    # available by default since apt 1.5. Can be removed
     apt-transport-https \
+    # needed by nginx
     ca-certificates \
+    # for remote control and transferring files between computers via SSH
     openssh-client \
     curl \ 
+    # convert plain text files from DOS(CR,LF)/Mac(CR/LF) format to Unix(LF), or vice verse
     dos2unix \
     git \
+    # GNU Privacy Guard, tool for secure communication and data storage.
+    # Can encrypt data and create digital signatures
     gnupg2 \
+    # part of gnupg2 for downloading certificates and Certificate Revocation Lists (CRLs)
     dirmngr \
+    # C++ compiler than runs from command line
     g++ \	
+    # sed for JSON data, since shell cannot interpret and work with JSON directly
     jq \
     libedit-dev \
     libfcgi0ldbl \
@@ -39,21 +48,28 @@ RUN apt-get update && apt-get install --no-install-recommends --no-install-sugge
     libmcrypt-dev \
     libpq-dev \
     # libssl-dev \
-    # openssh-client \
+    # process manager that provides interface for managing and monitoring long-running programs
     supervisor \
+    # to unpack zip archives 
     unzip \
+    # to package and compress files or directories
     zip \
+    # clear package lists fetched via apt update
     && rm -r /var/lib/apt/lists/*
 
 
 # Install extensions using the helper script provided by the base image
 RUN docker-php-ext-install \
+    # driver that enable access from php to mysql
     pdo_mysql \
+    # allow access to functionality provided by MySQL 4.1 and above
     mysqli \
     json \
+    # read a line of user input, equal to python input()
     readline \
     gd \
-    intl
+    # Internationalization
+    intl 
 
 # configure gd
 RUN docker-php-ext-configure gd \

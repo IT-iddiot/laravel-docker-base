@@ -11,6 +11,9 @@ then
     exit 1 
 fi 
 
+# put composer into a directory in $PATH, so can call composer anywhere
+# --install-dir => install in specific directory
+# --filename => filename in target directory (default: composer.phar)
 php /tmp/composer-setup.php --no-ansi --install-dir=/usr/bin --filename=composer \
  && rm /tmp/composer-setup.php \
  && composer --ansi --version --no-interaction
